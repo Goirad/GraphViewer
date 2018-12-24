@@ -39,8 +39,6 @@ let s2 = function(sketch) {
             graph1.perm[graph1.selected] = t;
         }
         graph1.selected = null;
-        console.log(graph1.perm);
-        console.log(graph2.perm);
         isIso = graph1.isoTo(graph2);
 
     };
