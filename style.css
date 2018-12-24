@@ -1,0 +1,71 @@
+.row {
+  background: #eee;
+  border-radius: 10px;
+  border-style: inset;
+  border-width: 1px;
+  margin: 2px;
+  height: 40px;
+}
+.row-choice {
+  height: 60px;
+}
+
+.label {
+  margin: 0px;
+}
+.label-right {
+  text-align: right;
+}
+
+.center-vert {
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.mycheckbox {
+  position: relative;
+  height: 100%;
+}
+.mycheckbox-switch {
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.mycheckbox-label {
+  position: absolute;
+  display: block;
+  left: 24px;
+  top: 50%;
+  transform: translate(0, -50%);
+  margin: 0px;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+}
+
+.myCol {
+  border-radius: 7px;
+  border-width: 1px;
+  border-color: #0005;
+  border-style: solid;
+  background: #ddd;
+  height: calc(100% - 6px);
+  margin: 3px;
+}
+
+.p5Canvas {
+  display: block;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.sketch-row {
+  height: auto;
+}
+
+/*# sourceMappingURL=style.css.map */

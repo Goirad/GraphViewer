@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.sound.min.js"></script>
+    <script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<script src="graph.js"></script>
+<script src="intro_sketch.js"></script>
+
+<script src="sketch_inst.js"></script>
+<script src="general.js"></script>
+
+<div class="container">
+    <div class="row" style="height: auto">
+        <div class="col myCol" >
+            <p>
+                Graph isomorphism is a hard problem. Computationally at least, because conceptually it is remarkably easy.
+                Check every permutation of the vertices of graph A and see if any of them match up with graph B.
+                The problem of course is that the number of permutations grows with the factorial of the number of vertices in the graphs.
+                Now of course anyone faced with an O(n!) search space quickly, or maybe even desperately, searches for shortcuts.
+                An obvious one is to only permute vertices with the same number of incident edges.
+                IE there is no point in trying to switch a vertex with 2 edges with one with 3, this will clearly result in an incompatible graph.
+            </p>
+            <p>
+                Let me take a moment to define more carefully what a graph is, and what it means for two of them to be isomorphic.
+                A graph contains two parts, a list of vertices, and a list of edges which connect two vertices.
+                So for example, a graph might contain vertices {A, B, C} and edges {(A, B)}.
+                Now consider another graph, vertices {A, B, C} and edges {(B, C)}.
+                These graphs are <i>isomorphic</i>, meaning that there is a permutation of the second graph's vertices such that the two graphs contain identical edges.
+                That permutation is {C, A, B} because the edges then become {(A, B)}.
+                For a more visual interpretation, consider the graphs drawn on a 2D plane, with each set of vertices arranged equidistant around two circles.
+                Then the two graphs are isomorphic if each of the second graph's vertices can be rearranged around its circle - dragging their edges along with them - in such a way that the two images look identical.
+                An interactive explanation can be found below.
+
+            </p>
+            <p>
+                This is the idea behind Vertex Labeling. We assign to each vertex a canonical label, in such a way that
+                no matter the permutation of the vertices, the same algorithm always gives the same vertex the same label.
+                Above the algorithm was simple, we label each vertex with the number of incident edges.
+            </p>
+        </div>
+    </div>
+    <div class="row sketch-row align-items-center">
+        <div class="col myCol">
+            <div id="sketch2"></div>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-3 myCol">
+            <label class="center-vert label">Number of Vertices:</label>
+        </div>
+        <div class="col myCol">
+            <input id="numVertsSlider" class="slider" type="range" min="0" max="60" step="1" value="10"/>
+        </div>
+        <div class="col-1 myCol">
+            <label class="center-vert label" id="numVertsLabel">10</label>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-3 myCol">
+            <label class="center-vert label">Probability of adding an edge:</label>
+        </div>
+        <div class="col myCol">
+            <input id="edgeDensity" class="slider" type="range" min="1" max="100" step="1" value="50">
+        </div>
+        <div class="col-1 myCol">
+            <label class="center-vert label" id="edgeDensityLabel">0.5</label>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-3 myCol">
+            <label class="center-vert label">Labelings: </label>
+        </div>
+        <div class="col myCol">
+            <div class="mycheckbox">
+                <input class="mycheckbox-switch" id="neighborsSwitch" type="checkbox" checked="true">
+                <label class="mycheckbox-label">Neighbors</label>
+            </div>
+        </div>
+        <div class="col-2 myCol">
+            <div class="mycheckbox">
+                <input class="mycheckbox-switch" id="neighbors2Switch" type="checkbox" checked="false">
+                <label class="mycheckbox-label">Ns' Neighbors</label>
+            </div>
+        </div>
+        <div class="col-3 myCol">
+            <div class="mycheckbox">
+                <input class="mycheckbox-switch" id="neighbors3Switch" type="checkbox" checked="false">
+                <label class="mycheckbox-label">Ns' Ns' Neighbors</label>
+            </div>
+        </div>
+        <div class="col myCol">
+            <div class="mycheckbox">
+                <input id="k3sSwitch" class="mycheckbox-switch" type="checkbox" checked="false">
+                <label class="mycheckbox-label">Triangle</label>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-3 myCol">
+            <label class="center-vert label">Raw Complexity</label>
+        </div>
+        <div class="col myCol label-right">
+            <label class="center-vert label" id="rawComplexity">hi</label>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-3 myCol">
+            <label class="center-vert label">Reduced Complexity</label>
+        </div>
+        <div class="col myCol label-right">
+            <label class="center-vert label" id="reducedComplexity">hello</label>
+        </div>
+    </div>
+    <div class="row row-choice align-items-center">
+        <div class="col-3 myCol">
+            <label class="center-vert label">Hard Graphs:</label>
+        </div>
+        <div class="col-2 myCol">
+            <div class="mycheckbox">
+                <input id="useHardGraphs" class="mycheckbox-switch" type="checkbox" checked="false">
+                <label class="mycheckbox-label">Use Hard Graphs</label>
+            </div>
+        </div>
+        <div class="col-1 myCol">
+            <select class="center-vert" id="hardGraphNumVertsSelector"></select>
+        </div>
+        <div class="col myCol">
+            <select class="center-vert" id="hardGraphSelector">
+            </select>
+        </div>
+    </div>
+
+    <div class="row sketch-row align-items-center">
+        <div class="col myCol">
+            <div id="sketch"></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
