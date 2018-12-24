@@ -1,5 +1,5 @@
 let s2 = function(sketch) {
-    let numVerts = 10;
+    let numVerts = 7;
     let graph1;
     let graph2;
     let isIso = false;

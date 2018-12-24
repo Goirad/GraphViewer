@@ -64,6 +64,14 @@ class Graph {
         context.fill(20);
         let radius = 150;
         let vertices = [];
+
+        context.fill(150);
+        context.noStroke();
+        for (let i = 0; i < this.numVerts; i++) {
+            let x = radius * Math.cos(2 * i * Math.PI / this.numVerts);
+            let y = radius * Math.sin(2 * i * Math.PI / this.numVerts);
+            context.ellipse(x, y, 20);
+        }
         for (let i = 0; i < this.numVerts; i++) {
             if(i != this.selected) {
                 vertices.push([
@@ -85,6 +93,7 @@ class Graph {
             }
 
         }
+        context.fill(0);
         for (let v in vertices) {
             context.ellipse(vertices[v][0], vertices[v][1], 6);
         }
