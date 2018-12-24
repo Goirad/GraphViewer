@@ -63,7 +63,7 @@ class Graph {
         context.stroke(20);
         context.fill(20);
         let radius = 150;
-        let vertices = []; 
+        let vertices = [];
 
         context.fill(150);
         context.noStroke();
